@@ -9,16 +9,16 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $response = NetworkHelper::get('localhost:8002/api/order');
+        $response = NetworkHelper::get(env('ORDER_BASE_URL').'order');
         if ($response->successful()) 
-            return $response->json();
+            return $response->json();   
 
         return response()->json(['error' => 'Failed to fetch data'], $response->status());
     }
 
     public function store(Request $request)
     {
-        $response = NetworkHelper::post('localhost:8002/api/order', $request->all());
+        $response = NetworkHelper::post(env('ORDER_BASE_URL').'order', $request->all());
         if ($response->successful()) 
             return $response->json();
 
@@ -27,7 +27,7 @@ class OrderController extends Controller
 
     public function show($id) 
     {
-        $response = NetworkHelper::get("localhost:8002/api/order/$id");
+        $response = NetworkHelper::get(env('ORDER_BASE_URL')."order/$id");
         if ($response->successful()) 
             return $response->json();
 
@@ -36,7 +36,7 @@ class OrderController extends Controller
 
     public function update(Request $request, $id)
     {
-        $response = NetworkHelper::post("localhost:8002/api/order/$id", $request->all());
+        $response = NetworkHelper::put(env('ORDER_BASE_URL')."order/$id", $request->all());
         if ($response->successful()) 
             return $response->json();
 
@@ -45,30 +45,11 @@ class OrderController extends Controller
 
     public function destroy(string $id)
     {
-        $response = NetworkHelper::delete("localhost:8002/api/order/$id");
+        $response = NetworkHelper::delete(env('ORDER_BASE_URL')."order/$id");
         if ($response->successful()) 
             return $response->json();
 
         return response()->json(['error' => 'Failed to delete data'], $response->status());
     }
 
-    
-
-    /* public function orders()
-    {
-        $response = NetworkHelper::get('localhost:8002/api/order');
-        if ($response->successful()) 
-            return $response->json();
-
-        return response()->json(['error' => 'Failed to fetch data'], $response->status());
-    }
-
-    public function users()
-    {
-        $response = NetworkHelper::get('localhost:8003/api/user');
-        if ($response->successful()) 
-            return $response->json();
-
-        return response()->json(['error' => 'Failed to fetch data'], $response->status());
-    } */
 }

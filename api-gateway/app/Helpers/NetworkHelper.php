@@ -34,4 +34,9 @@ class NetworkHelper
     {
         return Http::delete($url);
     }
+
+    public static function put(string $url, array $data): Response
+    {
+        return Http::put($url, $data);
+    }
 }
